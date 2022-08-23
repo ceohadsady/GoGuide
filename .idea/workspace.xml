@@ -6,12 +6,10 @@
   <component name="ChangeListManager">
     <list default="true" id="a230b0b5-14bd-47bd-830b-7c1abdbf5963" name="Changes" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.mod" beforeDir="false" afterPath="$PROJECT_DIR$/go.mod" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/go.sum" beforeDir="false" afterPath="$PROJECT_DIR$/go.sum" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/controllers/user_controller/user_controller.go" beforeDir="false" afterPath="$PROJECT_DIR$/controllers/user_controller/user_controller.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/errors/errors.go" beforeDir="false" afterPath="$PROJECT_DIR$/errors/errors.go" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.go" beforeDir="false" afterPath="$PROJECT_DIR$/main.go" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/routes/apiWeb.go" beforeDir="false" afterPath="$PROJECT_DIR$/routes/apiWeb.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user_service/users.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service/users.go" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/services/user_service/users_models.go" beforeDir="false" afterPath="$PROJECT_DIR$/services/user_service/users_models.go" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

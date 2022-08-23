@@ -13,7 +13,9 @@ import (
 
 func main() {
 	app := fiber.New()
-	app.Use(logger.New())
+	app.Use(logger.New(logger.Config{
+		TimeZone: "Asia/Vientiane",
+	}))
 	app.Use(cors.New())
 	connectDB, err := config.ConnectDB()
 	if err != nil {

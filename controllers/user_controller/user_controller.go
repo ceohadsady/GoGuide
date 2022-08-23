@@ -8,65 +8,65 @@ import (
 )
 
 type UserController interface {
-	CreateUserCrl(ctc *fiber.Ctx) error
-	UserLoginCrl(ctc *fiber.Ctx) error
-	GetUserByEmailCrl(ctc *fiber.Ctx) error
-	UpdateUserCrl(ctc *fiber.Ctx) error
-	DeleteUserCrl(ctc *fiber.Ctx) error
+	CreateUserCrl(ctx *fiber.Ctx) error
+	UserLoginCrl(ctx *fiber.Ctx) error
+	GetUserByEmailCrl(ctx *fiber.Ctx) error
+	UpdateUserCrl(ctx *fiber.Ctx) error
+	DeleteUserCrl(ctx *fiber.Ctx) error
 }
 
 type userController struct {
 	userSrv user_service.UserService
 }
 
-func (c userController) CreateUserCrl(ctc *fiber.Ctx) error {
+func (c userController) CreateUserCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserCreateRequest{}
-	err := ctc.BodyParser(&user)
+	err := ctx.BodyParser(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
 	userCreate, err := c.userSrv.CreateUserSrv(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
-	return controllers.NewCreateSuccessResponse(ctc, &userCreate)
+	return controllers.NewCreateSuccessResponse(ctx, &userCreate)
 }
-func (c userController) UserLoginCrl(ctc *fiber.Ctx) error {
+func (c userController) UserLoginCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserLoginRequest{}
-	err := ctc.BodyParser(&user)
+	err := ctx.BodyParser(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
 	userLogin, err := c.userSrv.UserLoginSrv(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
-	return controllers.NewSuccessResponse(ctc, &userLogin)
+	return controllers.NewSuccessResponse(ctx, &userLogin)
 }
-func (c userController) GetUserByEmailCrl(ctc *fiber.Ctx) error {
+func (c userController) GetUserByEmailCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserLoginRequest{}
-	err := ctc.BodyParser(&user)
+	err := ctx.BodyParser(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
 	userByMail, err := c.userSrv.GetUserByEmailSrv(user.Email)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
-	return controllers.NewSuccessResponse(ctc, &userByMail)
+	return controllers.NewSuccessResponse(ctx, &userByMail)
 }
-func (c userController) UpdateUserCrl(ctc *fiber.Ctx) error {
+func (c userController) UpdateUserCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserUpdateRequest{}
-	err := ctc.BodyParser(&user)
+	err := ctx.BodyParser(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
 	userRepo, err := c.userSrv.UpdateUserSrv(user.Email, user_service.UserUpdateRequest{
 		Name:     user.Name,
@@ -77,23 +77,23 @@ func (c userController) UpdateUserCrl(ctc *fiber.Ctx) error {
 	})
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
-	return controllers.NewSuccessResponse(ctc, &userRepo)
+	return controllers.NewSuccessResponse(ctx, &userRepo)
 }
-func (c userController) DeleteUserCrl(ctc *fiber.Ctx) error {
+func (c userController) DeleteUserCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserLoginRequest{}
-	err := ctc.BodyParser(&user)
+	err := ctx.BodyParser(&user)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
 	err = c.userSrv.DeleteUserSrv(user.Email)
 	if err != nil {
 		logs.Error(err)
-		return controllers.NewErrorResponses(ctc, err)
+		return controllers.NewErrorResponses(ctx, err)
 	}
-	return controllers.NewSuccessResponse(ctc, "DELETED")
+	return controllers.NewSuccessResponse(ctx, "DELETED")
 }
 
 func NewControllerUser(userSrv user_service.UserService) UserController {

@@ -45,3 +45,9 @@ func ErrorUnprocessableEntity(errorMessage string) error {
 		Message: errorMessage,
 	}
 }
+func NewValidation(errorMessage string) error {
+	return AppErrors{
+		Code:    http.StatusUnprocessableEntity,
+		Message: errorMessage,
+	}
+}

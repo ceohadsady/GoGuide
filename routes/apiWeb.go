@@ -12,6 +12,7 @@ type userRoute struct {
 
 func (r userRoute) Install(app *fiber.App) {
 	adminRouter := app.Group("api/v1", func(ctx *fiber.Ctx) error {
+		ctx.Set("Version", "v1")
 		return ctx.Next()
 	})
 	adminRouter.Post("/user/create", r.userCtr.CreateUserCrl)
