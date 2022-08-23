@@ -6,6 +6,8 @@ By:ceohadsady
 
 # first must install all package below
 
+// first use command   
+go run main.go
 
 // for connect database Mysql   if you use mysql must to read doc
 http://pkg.go.dev  
