@@ -22,6 +22,7 @@ type UserLoginResponse struct {
 	IsActive bool
 	CreateAt time.Time
 	UpdateAt time.Time
+	Token    string `json:"token"`
 }
 
 type UserResponse struct {

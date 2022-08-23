@@ -2,6 +2,7 @@ package user_service
 
 import (
 	"GuideGo/logs"
+	middlewarefunc "GuideGo/middleware"
 	"GuideGo/repositories/user_repository"
 	"GuideGo/security"
 	"errors"
@@ -43,6 +44,7 @@ func (s userRepository) CreateUserSrv(request *UserCreateRequest) (*UserCreateRe
 		IsActive: true,
 	}
 	createUser, _ := s.userRepo.CreateUser(&userRepoCreate)
+
 	userResponse := UserCreateResponse{
 		Name:     createUser.Name,
 		FullName: createUser.FullName,
@@ -70,6 +72,7 @@ func (s userRepository) UserLoginSrv(request *UserLoginRequest) (*UserLoginRespo
 		logs.Error("INVALID_PASSWORD")
 		return nil, errors.New("INVALID_PASSWORD")
 	}
+	newGenerateToken, _ := middlewarefunc.NewGenerateAccessToken(getUser.Email)
 	userLoginRes := UserLoginResponse{
 		Name:     getUser.Name,
 		FullName: getUser.FullName,
@@ -77,6 +80,7 @@ func (s userRepository) UserLoginSrv(request *UserLoginRequest) (*UserLoginRespo
 		Phone:    getUser.Phone,
 		IsActive: getUser.IsActive,
 		CreateAt: getUser.CreatedAt,
+		Token:    newGenerateToken,
 	}
 	return &userLoginRes, nil
 }

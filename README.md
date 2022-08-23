@@ -13,22 +13,3 @@ go run main.go
 http://pkg.go.dev  
 github.com/go-sql-driver/mysql 
 
-//framework assist for   
-gorm.io/gorm
-
-//fiber help to make CRUD api  
-github.com/gofiber/fiber/v2
-
-//use to read config file(config.yaml)  
-github.com/spf13/viper
-
-//handle log in logs folder  
-go.uber.org/zap
-go.uber.org/zap/zapcore
-
-// jwt  
-github.com/dgrijalva/jwt-go
-github.com/gofiber/jwt/v2
-
-//bcrypt password  
-golang.org/x/crypto/bcrypt
