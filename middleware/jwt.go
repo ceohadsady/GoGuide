@@ -1,7 +1,7 @@
 package middlewarefunc
 
 import (
-	"GuideGo/logs"
+	"GoGuide/logs"
 	"fmt"
 	"github.com/dgrijalva/jwt-go"
 	"github.com/gofiber/fiber/v2"

@@ -1,11 +1,11 @@
 package main
 
 import (
-	"GuideGo/config"
-	"GuideGo/controllers/user_controller"
-	"GuideGo/repositories/user_repository"
-	"GuideGo/routes"
-	"GuideGo/services/user_service"
+	"GoGuide/config"
+	"GoGuide/controllers/user_controller"
+	"GoGuide/repositories/user_repository"
+	"GoGuide/routes"
+	"GoGuide/services/user_service"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"

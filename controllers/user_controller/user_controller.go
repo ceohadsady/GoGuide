@@ -1,9 +1,10 @@
 package user_controller
 
 import (
-	"GuideGo/controllers"
-	"GuideGo/logs"
-	"GuideGo/services/user_service"
+	"GoGuide/controllers"
+	"GoGuide/logs"
+	"GoGuide/services/user_service"
+	"GoGuide/validation"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -20,19 +21,28 @@ type userController struct {
 }
 
 func (c userController) CreateUserCrl(ctx *fiber.Ctx) error {
-	user := user_service.UserCreateRequest{}
-	err := ctx.BodyParser(&user)
+	//ຮັບຄ່າ UserCreateRequest ມາ validate
+	validate := new(user_service.UserCreateRequest)
+	err := ctx.BodyParser(validate)              // harm h pen pointer
+	errs := validation.ValidateStruct(*validate) // ya leum h pen pointer
+	if errs != nil {
+		logs.Error(errs)
+		return controllers.NewErrorValidate(ctx, errs[0].Error) // errs[0].Error return hai flutter jut karn theua la 1 error
+	}
+	request := user_service.UserCreateRequest{}
+	err = ctx.BodyParser(&request)
 	if err != nil {
 		logs.Error(err)
 		return controllers.NewErrorResponses(ctx, err)
 	}
-	userCreate, err := c.userSrv.CreateUserSrv(&user)
+	userCreate, err := c.userSrv.CreateUserSrv(&request)
 	if err != nil {
 		logs.Error(err)
 		return controllers.NewErrorResponses(ctx, err)
 	}
 	return controllers.NewCreateSuccessResponse(ctx, &userCreate)
 }
+
 func (c userController) UserLoginCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserLoginRequest{}
 	err := ctx.BodyParser(&user)
@@ -47,6 +57,7 @@ func (c userController) UserLoginCrl(ctx *fiber.Ctx) error {
 	}
 	return controllers.NewSuccessResponse(ctx, &userLogin)
 }
+
 func (c userController) GetUserByEmailCrl(ctx *fiber.Ctx) error {
 	user := user_service.UserLoginRequest{}
 	err := ctx.BodyParser(&user)

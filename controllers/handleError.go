@@ -1,7 +1,7 @@
 package controllers
 
 import (
-	"GuideGo/errors"
+	"GoGuide/errors"
 	"github.com/gofiber/fiber/v2"
 	"net/http"
 )

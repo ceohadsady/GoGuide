@@ -1,7 +1,7 @@
 package security
 
 import (
-	"GuideGo/logs"
+	"GoGuide/logs"
 	"golang.org/x/crypto/bcrypt"
 )
 

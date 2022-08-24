@@ -10,6 +10,7 @@ type UsersRepository interface {
 	GetAllUser() (*User, error)
 	UpdateUserByEmail(email string, request *User) (*User, error) //update by email
 	DeleteUserById(email string) error
+	//GetUserByAge(email string,age string) (*User, error)
 }
 
 type userRepository struct {
@@ -49,7 +50,7 @@ func (r userRepository) UpdateUserByEmail(email string, request *User) (*User, e
 }
 func (r userRepository) DeleteUserById(email string) error {
 	user := User{}
-	err := r.db.Where("email", email).Delete(&user).Error
+	err := r.db.Unscoped().Where("email", email).Delete(&user).Error
 	if err != nil {
 		return err
 	}

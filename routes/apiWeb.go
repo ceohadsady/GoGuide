@@ -1,8 +1,8 @@
 package routes
 
 import (
-	"GuideGo/controllers/user_controller"
-	middlewarefunc "GuideGo/middleware"
+	"GoGuide/controllers/user_controller"
+	middleware "GoGuide/middleware"
 	"github.com/gofiber/fiber/v2"
 )
 
@@ -18,15 +18,14 @@ func (r userRoute) Install(app *fiber.App) {
 	adminRouter.Post("/user/create", r.userCtr.CreateUserCrl)
 	adminRouter.Post("/user/login", r.userCtr.UserLoginCrl)
 	//adminRouter.Post("user/email", r.userCtr.GetUserByEmailCrl)
-	//adminRouter.Post("user/update", r.userCtr.UpdateUserCrl)
-	//adminRouter.Post("user/delete", r.userCtr.DeleteUserCrl)
-	adminAuthRouter := adminRouter.Group("/auth/", middlewarefunc.NewAuthentication, func(ctx *fiber.Ctx) error {
+	adminRouter.Post("user/update", r.userCtr.UpdateUserCrl)
+	adminRouter.Post("user/delete", r.userCtr.DeleteUserCrl)
+	adminAuthRouter := adminRouter.Group("/auth/", middleware.NewAuthentication, func(ctx *fiber.Ctx) error {
 		return ctx.Next()
 	})
 	adminAuthRouter.Post("user/email", r.userCtr.GetUserByEmailCrl)
-	adminAuthRouter.Post("user/update", r.userCtr.UpdateUserCrl)
-	adminAuthRouter.Post("user/delete", r.userCtr.DeleteUserCrl)
-	//adminRouter.Post("/:id",r.userController.GetUserCtrl)
+	//adminAuthRouter.Post("user/update", r.userCtr.UpdateUserCrl)
+	//adminAuthRouter.Post("user/delete", r.userCtr.DeleteUserCrl)
 
 }
 

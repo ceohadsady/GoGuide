@@ -8,11 +8,11 @@ import (
 type User struct {
 	gorm.Model
 	Name     string
-	FullName string
-	Email    string `gorm:"uniqueIndex"`
+	FullName string `validate:"required,min=3,max=32"`
+	Email    string `gorm:"uniqueIndex" `
 	Phone    int
 	Password string
-	//Address  address
+	//Address
 	IsActive bool
 	CreateAt time.Time
 	UpdateAt time.Time

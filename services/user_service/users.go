@@ -1,10 +1,10 @@
 package user_service
 
 import (
-	"GuideGo/logs"
-	middlewarefunc "GuideGo/middleware"
-	"GuideGo/repositories/user_repository"
-	"GuideGo/security"
+	"GoGuide/logs"
+	middleware "GoGuide/middleware"
+	"GoGuide/repositories/user_repository"
+	"GoGuide/security"
 	"errors"
 	"time"
 )
@@ -22,15 +22,16 @@ type userRepository struct {
 }
 
 func (s userRepository) CreateUserSrv(request *UserCreateRequest) (*UserCreateResponse, error) {
-	//if request.FullName == "" || request.Email == "" || request.Phone == 0 || request.Name == "" || request.Password == "" {
-	//	logs.Error("ENTER_ALL_FIELD")
-	//	return nil, errors.New("ENTER_ALL_FIELD")
-	//}
+	if request.Name == "" || request.FullName == "" {
+		logs.Error("ENTER_ALL_FIELD")
+		return nil, errors.New("ENTER_ALL_FIELD")
+	}
 	getUser, _ := s.userRepo.GetUserByEmail(request.Email)
 	if getUser.Email == request.Email {
 		logs.Error("ALREADY_EXIST_USER")
 		return nil, errors.New("ALREADY_EXIST_USER")
 	}
+
 	newEncryptPassword, _ := security.NewEncryptPassword(request.Password)
 
 	userRepoCreate := user_repository.User{
@@ -58,21 +59,18 @@ func (s userRepository) CreateUserSrv(request *UserCreateRequest) (*UserCreateRe
 	return &userResponse, nil
 }
 func (s userRepository) UserLoginSrv(request *UserLoginRequest) (*UserLoginResponse, error) {
-	if request.Email == "" || request.Password == "" {
-		logs.Error("INVALID_EMAIL_AND_PASSWORD")
-		return nil, errors.New("INVALID_EMAIL_AND_PASSWORD")
-	}
+
 	getUser, _ := s.userRepo.GetUserByEmail(request.Email)
 	if getUser.Email != request.Email {
-		logs.Error("INVALID_EMAIL")
-		return nil, errors.New("INVALID_EMAIL")
+		logs.Error("INVALID_EMAIL_OR_PASSWORD")
+		return nil, errors.New("INVALID_EMAIL_OR_PASSWORD")
 	}
 	err := security.VerifyPassword(getUser.Password, request.Password)
 	if err != nil {
-		logs.Error("INVALID_PASSWORD")
-		return nil, errors.New("INVALID_PASSWORD")
+		logs.Error("INVALID_EMAIL_OR_PASSWORD")
+		return nil, errors.New("INVALID_EMAIL_OR_PASSWORD")
 	}
-	newGenerateToken, _ := middlewarefunc.NewGenerateAccessToken(getUser.Email)
+	newGenerateToken, _ := middleware.NewGenerateAccessToken(getUser.Email)
 	userLoginRes := UserLoginResponse{
 		Name:     getUser.Name,
 		FullName: getUser.FullName,
